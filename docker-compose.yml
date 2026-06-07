@@ -1,0 +1,71 @@
+# ═══════════════════════════════════════════════════════
+#  FleetFlow - Docker Compose
+#  File location: root of project (same folder as pom.xml)
+#
+#  HOW TO USE:
+#    Start database:  docker-compose up -d
+#    Stop database:   docker-compose down
+#    See logs:        docker-compose logs
+#
+#  The -d flag means "detached" (runs in background).
+#  After running, the database is available at localhost:5432
+# ═══════════════════════════════════════════════════════
+
+version: '3.8'
+
+services:
+
+  # ── PostgreSQL Database ────────────────────────────────
+  # This is the database container.
+  # It uses the official PostgreSQL 15 image from Docker Hub.
+  db:
+    image: postgres:15-alpine
+    container_name: fleetflow_db
+    restart: unless-stopped
+
+    # Environment variables = settings for this container
+    environment:
+      POSTGRES_DB: fleetflow_db        # database name (matches application.properties)
+      POSTGRES_USER: fleetflow_user    # username       (matches application.properties)
+      POSTGRES_PASSWORD: fleetflow_pass # password      (matches application.properties)
+
+    # Port mapping: YOUR_COMPUTER:INSIDE_DOCKER
+    # So localhost:5432 connects to the database inside Docker
+    ports:
+      - "5432:5432"
+
+    # Volume = where database data is saved on your computer.
+    # This means data is NOT lost when you restart Docker.
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+    # Health check: Docker will wait until the database
+    # is actually ready before the app tries to connect.
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U fleetflow_user -d fleetflow_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ── Spring Boot App (optional - for full docker deployment) ──
+  # Uncomment this section ONLY when deploying to production.
+  # During development, run the app from IntelliJ instead.
+  #
+  # app:
+  #   build: .
+  #   container_name: fleetflow_app
+  #   ports:
+  #     - "8080:8080"
+  #   environment:
+  #     SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/fleetflow_db
+  #     SPRING_DATASOURCE_USERNAME: fleetflow_user
+  #     SPRING_DATASOURCE_PASSWORD: fleetflow_pass
+  #     JWT_SECRET: your-production-secret-here
+  #   depends_on:
+  #     db:
+  #       condition: service_healthy
+
+# ── Volumes ────────────────────────────────────────────
+# Named volumes persist data between docker-compose restarts.
+volumes:
+  postgres_data:
