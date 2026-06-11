@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JwtAuthFilter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">fleetflow</a> &gt; <a href="index.source.html" class="el_package">com.fleetflow.security</a> &gt; <span class="el_source">JwtAuthFilter.java</span></div><h1>JwtAuthFilter.java</h1><pre class="source lang-java linenums">package com.fleetflow.security;
+
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
+import org.springframework.web.filter.OncePerRequestFilter;
+
+import java.io.IOException;
+
+/**
+ * JwtAuthFilter — runs on EVERY incoming HTTP request.
+ *
+ * WHAT IT DOES:
+ * Checks if the request has a valid JWT token in the
+ * Authorization header. If yes, it tells Spring Security
+ * who the user is so they can access protected endpoints.
+ *
+ * HOW IT WORKS (step by step):
+ *
+ * Request comes in →
+ *   1. Read the Authorization header
+ *      Example: &quot;Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIi...&quot;
+ *
+ *   2. Extract the token part (remove &quot;Bearer &quot;)
+ *
+ *   3. Validate the token using JwtUtil
+ *      - Is it signed with our secret key? ✓
+ *      - Is it expired? ✓
+ *
+ *   4. Extract the email from the token
+ *
+ *   5. Load the full user from database by email
+ *
+ *   6. Tell Spring Security &quot;this request is authenticated as this user&quot;
+ *
+ *   7. Continue to the controller
+ *
+ * If any step fails (no token, expired, invalid):
+ *   → Spring Security blocks the request with 401 Unauthorized
+ *
+ * OncePerRequestFilter = guaranteed to run exactly once per request
+ */
+@Component
+@RequiredArgsConstructor
+<span class="fc" id="L54">@Slf4j</span>
+public class JwtAuthFilter extends OncePerRequestFilter {
+
+    private final JwtUtil jwtUtil;
+    private final UserDetailsServiceImpl userDetailsService;
+
+    @Override
+    protected void doFilterInternal(HttpServletRequest request,
+                                    HttpServletResponse response,
+                                    FilterChain filterChain)
+            throws ServletException, IOException {
+
+        try {
+            // Step 1 &amp; 2: Get JWT token from request header
+<span class="fc" id="L68">            String jwt = getJwtFromRequest(request);</span>
+
+            // Step 3: Validate the token
+<span class="pc bpc" id="L71" title="3 of 4 branches missed.">            if (StringUtils.hasText(jwt) &amp;&amp; jwtUtil.validateToken(jwt)) {</span>
+
+                // Step 4: Get email from token
+<span class="nc" id="L74">                String email = jwtUtil.getEmailFromToken(jwt);</span>
+
+                // Step 5: Load user details from database
+<span class="nc" id="L77">                UserDetails userDetails =</span>
+<span class="nc" id="L78">                        userDetailsService.loadUserByUsername(email);</span>
+
+                // Step 6: Create authentication object and set it
+                // in Spring Security's context for this request
+<span class="nc" id="L82">                UsernamePasswordAuthenticationToken authentication =</span>
+                        new UsernamePasswordAuthenticationToken(
+                                userDetails,
+                                null,
+<span class="nc" id="L86">                                userDetails.getAuthorities()</span>
+                        );
+<span class="nc" id="L88">                authentication.setDetails(</span>
+                        new WebAuthenticationDetailsSource()
+<span class="nc" id="L90">                                .buildDetails(request)</span>
+                );
+
+                // Tell Spring Security: this request is authenticated
+<span class="nc" id="L94">                SecurityContextHolder.getContext()</span>
+<span class="nc" id="L95">                        .setAuthentication(authentication);</span>
+            }
+<span class="nc" id="L97">        } catch (Exception e) {</span>
+<span class="nc" id="L98">            log.error(&quot;Cannot set user authentication: {}&quot;, e.getMessage());</span>
+<span class="fc" id="L99">        }</span>
+
+        // Step 7: Continue to the next filter / controller
+<span class="fc" id="L102">        filterChain.doFilter(request, response);</span>
+<span class="fc" id="L103">    }</span>
+
+    // ── Helper: extract token from &quot;Bearer &lt;token&gt;&quot; header ────────────────
+    private String getJwtFromRequest(HttpServletRequest request) {
+<span class="fc" id="L107">        String bearerToken = request.getHeader(&quot;Authorization&quot;);</span>
+
+        // Check header exists and starts with &quot;Bearer &quot;
+<span class="pc bpc" id="L110" title="1 of 2 branches missed.">        if (StringUtils.hasText(bearerToken)</span>
+<span class="nc bnc" id="L111" title="All 2 branches missed.">                &amp;&amp; bearerToken.startsWith(&quot;Bearer &quot;)) {</span>
+            // Return just the token part (remove &quot;Bearer &quot; prefix)
+<span class="nc" id="L113">            return bearerToken.substring(7);</span>
+        }
+<span class="fc" id="L115">        return null;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
