@@ -1,0 +1,4 @@
+com\fleetflow\RouteServiceTest.class
+com\fleetflow\WarehouseServiceTest.class
+com\fleetflow\FleetflowApplicationTests.class
+com\fleetflow\VehicleServiceTest.class

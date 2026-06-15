@@ -1,0 +1,16 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+fleetflow,com.fleetflow.service,VehicleService,70,94,6,4,16,25,6,8,3,6
+fleetflow,com.fleetflow.service,WarehouseService,0,119,0,2,0,29,0,9,0,8
+fleetflow,com.fleetflow.service,RouteService,65,111,2,2,13,31,4,9,3,8
+fleetflow,com.fleetflow.controller,WarehouseController,33,0,0,0,7,0,5,0,5,0
+fleetflow,com.fleetflow.controller,RouteController,39,0,0,0,9,0,6,0,6,0
+fleetflow,com.fleetflow.controller,VehicleController,38,0,0,0,8,0,6,0,6,0
+fleetflow,com.fleetflow.dto,VehicleDTO,0,26,0,0,0,7,0,1,0,1
+fleetflow,com.fleetflow.dto,WarehouseDTO,0,26,0,0,0,7,0,1,0,1
+fleetflow,com.fleetflow.dto,RouteDTO,0,36,0,0,0,9,0,1,0,1
+fleetflow,com.fleetflow,FleetflowApplication,8,3,0,0,3,1,1,1,1,1
+fleetflow,com.fleetflow.entity,VehicleStatus,0,15,0,0,0,3,0,1,0,1
+fleetflow,com.fleetflow.exception,ResourceNotFoundException,4,6,0,0,2,2,1,1,1,1
+fleetflow,com.fleetflow.exception,DuplicateResourceException,0,4,0,0,0,2,0,1,0,1
+fleetflow,com.fleetflow.exception,BadRequestException,4,0,0,0,2,0,1,0,1,0
+fleetflow,com.fleetflow.exception,GlobalExceptionHandler,168,7,2,0,41,2,9,2,8,2
