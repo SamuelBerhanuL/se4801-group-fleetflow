@@ -16,7 +16,7 @@ public class ShipmentDTO {
     private Long id;
     private String trackingCode;
     private ShipmentStatus status;
-    private Double weight;
+    private java.math.BigDecimal weight;
     private String description;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

@@ -40,7 +40,7 @@ public class CreateShipmentRequest {
     private Long originWarehouseId;
 
     @Min(value = 0, message = "Weight cannot be negative")
-    private Double weight;
+    private java.math.BigDecimal weight;
 
     private String description;
 }

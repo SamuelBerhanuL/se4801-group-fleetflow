@@ -71,7 +71,7 @@ public class Shipment {
 
     // Weight of the goods in kilograms
     @Column(name = "weight")
-    private Double weight;
+    private java.math.BigDecimal weight;
 
     // Description of what is being delivered
     @Column(name = "description")

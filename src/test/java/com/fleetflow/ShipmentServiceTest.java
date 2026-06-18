@@ -88,7 +88,7 @@ class ShipmentServiceTest {
                 .originWarehouse(mockWarehouse)
                 .trackingCode("FF-A1B2C3D4")
                 .status(ShipmentStatus.PENDING)
-                .weight(100.0).build();
+                .weight(java.math.BigDecimal.valueOf(100.0)).build();
 
         createRequest = new CreateShipmentRequest();
         createRequest.setDriverId(1L);
@@ -96,7 +96,7 @@ class ShipmentServiceTest {
         createRequest.setRouteId(1L);
         createRequest.setCustomerId(1L);
         createRequest.setOriginWarehouseId(1L);
-        createRequest.setWeight(100.0);
+        createRequest.setWeight(java.math.BigDecimal.valueOf(100.0));;
         createRequest.setDescription("Test shipment");
     }
 
