@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CustomerService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">fleetflow</a> &gt; <a href="index.source.html" class="el_package">com.fleetflow.service</a> &gt; <span class="el_source">CustomerService.java</span></div><h1>CustomerService.java</h1><pre class="source lang-java linenums">package com.fleetflow.service;
+
+import com.fleetflow.dto.CustomerDTO;
+import com.fleetflow.entity.Customer;
+import com.fleetflow.exception.ResourceNotFoundException;
+import com.fleetflow.repository.CustomerRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+/**
+ * CustomerService — all customer business logic lives here.
+ */
+@Service
+@RequiredArgsConstructor
+<span class="fc" id="L20">@Slf4j</span>
+public class CustomerService {
+
+    private final CustomerRepository customerRepository;
+
+    // ── Create ────────────────────────────────────────────────────────────
+    @Transactional
+    public CustomerDTO createCustomer(CustomerDTO dto) {
+<span class="fc" id="L28">        Customer customer = Customer.builder()</span>
+<span class="fc" id="L29">                .fullName(dto.getFullName())</span>
+<span class="fc" id="L30">                .email(dto.getEmail())</span>
+<span class="fc" id="L31">                .phone(dto.getPhone())</span>
+<span class="fc" id="L32">                .address(dto.getAddress())</span>
+<span class="fc" id="L33">                .build();</span>
+
+<span class="fc" id="L35">        Customer saved = customerRepository.save(customer);</span>
+<span class="fc" id="L36">        log.info(&quot;Customer created: {}&quot;, saved.getFullName());</span>
+<span class="fc" id="L37">        return CustomerDTO.fromEntity(saved);</span>
+    }
+
+    // ── Get All ───────────────────────────────────────────────────────────
+    @Transactional(readOnly = true)
+    public List&lt;CustomerDTO&gt; getAllCustomers() {
+<span class="fc" id="L43">        return customerRepository.findAll()</span>
+<span class="fc" id="L44">                .stream()</span>
+<span class="fc" id="L45">                .map(CustomerDTO::fromEntity)</span>
+<span class="fc" id="L46">                .collect(Collectors.toList());</span>
+    }
+
+    // ── Get By Id ─────────────────────────────────────────────────────────
+    @Transactional(readOnly = true)
+    public CustomerDTO getCustomerById(Long id) {
+<span class="fc" id="L52">        Customer customer = customerRepository.findById(id)</span>
+<span class="fc" id="L53">                .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Customer&quot;, id));</span>
+<span class="fc" id="L54">        return CustomerDTO.fromEntity(customer);</span>
+    }
+
+    // ── Update ────────────────────────────────────────────────────────────
+    @Transactional
+    public CustomerDTO updateCustomer(Long id, CustomerDTO dto) {
+<span class="nc" id="L60">        Customer customer = customerRepository.findById(id)</span>
+<span class="nc" id="L61">                .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Customer&quot;, id));</span>
+
+<span class="nc" id="L63">        customer.setFullName(dto.getFullName());</span>
+<span class="nc" id="L64">        customer.setEmail(dto.getEmail());</span>
+<span class="nc" id="L65">        customer.setPhone(dto.getPhone());</span>
+<span class="nc" id="L66">        customer.setAddress(dto.getAddress());</span>
+
+<span class="nc" id="L68">        return CustomerDTO.fromEntity(customerRepository.save(customer));</span>
+    }
+
+    // ── Delete ────────────────────────────────────────────────────────────
+    @Transactional
+    public void deleteCustomer(Long id) {
+<span class="fc bfc" id="L74" title="All 2 branches covered.">        if (!customerRepository.existsById(id)) {</span>
+<span class="fc" id="L75">            throw new ResourceNotFoundException(&quot;Customer&quot;, id);</span>
+        }
+<span class="fc" id="L77">        customerRepository.deleteById(id);</span>
+<span class="fc" id="L78">        log.info(&quot;Customer deleted: id={}&quot;, id);</span>
+<span class="fc" id="L79">    }</span>
+
+    // ── Search by name ────────────────────────────────────────────────────
+    @Transactional(readOnly = true)
+    public List&lt;CustomerDTO&gt; searchByName(String name) {
+<span class="fc" id="L84">        return customerRepository</span>
+<span class="fc" id="L85">                .findByFullNameContainingIgnoreCase(name)</span>
+<span class="fc" id="L86">                .stream()</span>
+<span class="fc" id="L87">                .map(CustomerDTO::fromEntity)</span>
+<span class="fc" id="L88">                .collect(Collectors.toList());</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

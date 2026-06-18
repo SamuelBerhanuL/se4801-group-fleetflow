@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ShipmentService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">fleetflow</a> &gt; <a href="index.source.html" class="el_package">com.fleetflow.service</a> &gt; <span class="el_source">ShipmentService.java</span></div><h1>ShipmentService.java</h1><pre class="source lang-java linenums">package com.fleetflow.service;
+
+import com.fleetflow.dto.CreateShipmentRequest;
+import com.fleetflow.dto.ShipmentDTO;
+import com.fleetflow.entity.*;
+import com.fleetflow.exception.BadRequestException;
+import com.fleetflow.exception.ResourceNotFoundException;
+import com.fleetflow.repository.*;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.UUID;
+
+/**
+ * ShipmentService — the most important service in FleetFlow.
+ * Handles creating shipments, updating status, and searching.
+ *
+ * Key rules enforced here:
+ * - Tracking code is auto-generated (dispatcher never types it)
+ * - Status can only move FORWARD (no going backwards)
+ * - Every status change is logged in AuditLog automatically
+ */
+@Service
+@RequiredArgsConstructor
+<span class="fc" id="L30">@Slf4j</span>
+public class ShipmentService {
+
+    private final ShipmentRepository shipmentRepository;
+    private final DriverRepository driverRepository;
+    private final VehicleRepository vehicleRepository;
+    private final RouteRepository routeRepository;
+    private final CustomerRepository customerRepository;
+    private final WarehouseRepository warehouseRepository;
+    private final AuditLogService auditLogService;
+
+    // ── Create Shipment ───────────────────────────────────────────────────
+    @Transactional
+    public ShipmentDTO createShipment(CreateShipmentRequest request) {
+
+        // Fetch all related entities by their IDs
+        // Throws ResourceNotFoundException if any ID doesn't exist
+<span class="fc" id="L47">        Driver driver = driverRepository.findById(request.getDriverId())</span>
+<span class="fc" id="L48">                .orElseThrow(() -&gt; new ResourceNotFoundException(</span>
+<span class="fc" id="L49">                        &quot;Driver&quot;, request.getDriverId()));</span>
+
+<span class="fc" id="L51">        Vehicle vehicle = vehicleRepository.findById(request.getVehicleId())</span>
+<span class="pc" id="L52">                .orElseThrow(() -&gt; new ResourceNotFoundException(</span>
+<span class="nc" id="L53">                        &quot;Vehicle&quot;, request.getVehicleId()));</span>
+
+<span class="fc" id="L55">        Route route = routeRepository.findById(request.getRouteId())</span>
+<span class="pc" id="L56">                .orElseThrow(() -&gt; new ResourceNotFoundException(</span>
+<span class="nc" id="L57">                        &quot;Route&quot;, request.getRouteId()));</span>
+
+<span class="fc" id="L59">        Customer customer = customerRepository.findById(request.getCustomerId())</span>
+<span class="pc" id="L60">                .orElseThrow(() -&gt; new ResourceNotFoundException(</span>
+<span class="nc" id="L61">                        &quot;Customer&quot;, request.getCustomerId()));</span>
+
+<span class="fc" id="L63">        Warehouse warehouse = warehouseRepository</span>
+<span class="fc" id="L64">                .findById(request.getOriginWarehouseId())</span>
+<span class="pc" id="L65">                .orElseThrow(() -&gt; new ResourceNotFoundException(</span>
+<span class="nc" id="L66">                        &quot;Warehouse&quot;, request.getOriginWarehouseId()));</span>
+
+        // Generate unique tracking code: &quot;FF-&quot; + first 8 chars of UUID
+        // Example: &quot;FF-A1B2C3D4&quot;
+<span class="fc" id="L70">        String trackingCode = &quot;FF-&quot; + UUID.randomUUID()</span>
+<span class="fc" id="L71">                .toString().replace(&quot;-&quot;, &quot;&quot;)</span>
+<span class="fc" id="L72">                .substring(0, 8).toUpperCase();</span>
+
+<span class="fc" id="L74">        Shipment shipment = Shipment.builder()</span>
+<span class="fc" id="L75">                .driver(driver)</span>
+<span class="fc" id="L76">                .vehicle(vehicle)</span>
+<span class="fc" id="L77">                .route(route)</span>
+<span class="fc" id="L78">                .customer(customer)</span>
+<span class="fc" id="L79">                .originWarehouse(warehouse)</span>
+<span class="fc" id="L80">                .trackingCode(trackingCode)</span>
+<span class="fc" id="L81">                .status(ShipmentStatus.PENDING)</span>
+<span class="fc" id="L82">                .weight(request.getWeight())</span>
+<span class="fc" id="L83">                .description(request.getDescription())</span>
+<span class="fc" id="L84">                .build();</span>
+
+<span class="fc" id="L86">        Shipment saved = shipmentRepository.save(shipment);</span>
+
+        // Log the creation in audit log
+<span class="fc" id="L89">        String actor = getCurrentUserEmail();</span>
+<span class="fc" id="L90">        auditLogService.log(saved, null, ShipmentStatus.PENDING, actor);</span>
+
+<span class="fc" id="L92">        log.info(&quot;Shipment created: {}&quot;, trackingCode);</span>
+<span class="fc" id="L93">        return ShipmentDTO.fromEntity(saved);</span>
+    }
+
+    // ── Get All Shipments (paginated) ─────────────────────────────────────
+    // Returns Page&lt;ShipmentDTO&gt; — 10 per page by default
+    // Caller sends: GET /api/shipments?page=0&amp;size=10&amp;sort=createdAt,desc
+    @Transactional(readOnly = true)
+    public Page&lt;ShipmentDTO&gt; getAllShipments(Pageable pageable) {
+<span class="fc" id="L101">        return shipmentRepository.findAll(pageable)</span>
+<span class="fc" id="L102">                .map(ShipmentDTO::fromEntity);</span>
+    }
+
+    // ── Get Shipment By Id ────────────────────────────────────────────────
+    @Transactional(readOnly = true)
+    public ShipmentDTO getShipmentById(Long id) {
+<span class="fc" id="L108">        Shipment shipment = shipmentRepository.findById(id)</span>
+<span class="fc" id="L109">                .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Shipment&quot;, id));</span>
+<span class="fc" id="L110">        return ShipmentDTO.fromEntity(shipment);</span>
+    }
+
+    // ── Get By Tracking Code ──────────────────────────────────────────────
+    // Public-facing — customers use this to track their order
+    @Transactional(readOnly = true)
+    public ShipmentDTO getByTrackingCode(String code) {
+<span class="nc" id="L117">        Shipment shipment = shipmentRepository.findByTrackingCode(code)</span>
+<span class="nc" id="L118">                .orElseThrow(() -&gt; new ResourceNotFoundException(</span>
+                        &quot;Shipment with tracking code: &quot; + code));
+<span class="nc" id="L120">        return ShipmentDTO.fromEntity(shipment);</span>
+    }
+
+    // ── Get Shipments By Customer ─────────────────────────────────────────
+    @Transactional(readOnly = true)
+    public Page&lt;ShipmentDTO&gt; getShipmentsByCustomer(Long customerId,
+                                                     Pageable pageable) {
+<span class="nc" id="L127">        return shipmentRepository.findByCustomerId(customerId, pageable)</span>
+<span class="nc" id="L128">                .map(ShipmentDTO::fromEntity);</span>
+    }
+
+    // ── Get Shipments By Status ───────────────────────────────────────────
+    @Transactional(readOnly = true)
+    public Page&lt;ShipmentDTO&gt; getShipmentsByStatus(ShipmentStatus status,
+                                                   Pageable pageable) {
+<span class="nc" id="L135">        return shipmentRepository.findByStatus(status, pageable)</span>
+<span class="nc" id="L136">                .map(ShipmentDTO::fromEntity);</span>
+    }
+
+    // ── Update Shipment Status ────────────────────────────────────────────
+    // Enforces forward-only status transitions
+    // Automatically creates an AuditLog entry
+    @Transactional
+    public ShipmentDTO updateStatus(Long id, String newStatusStr) {
+<span class="fc" id="L144">        Shipment shipment = shipmentRepository.findById(id)</span>
+<span class="pc" id="L145">                .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Shipment&quot;, id));</span>
+
+        ShipmentStatus newStatus;
+        try {
+<span class="fc" id="L149">            newStatus = ShipmentStatus.valueOf(newStatusStr.toUpperCase());</span>
+<span class="nc" id="L150">        } catch (IllegalArgumentException e) {</span>
+<span class="nc" id="L151">            throw new BadRequestException(&quot;Invalid status: &quot; + newStatusStr +</span>
+                    &quot;. Valid values: PENDING, PICKED_UP, IN_TRANSIT, DELIVERED, CANCELLED&quot;);
+<span class="fc" id="L153">        }</span>
+
+        // Validate status transition — no going backwards
+<span class="fc" id="L156">        validateStatusTransition(shipment.getStatus(), newStatus);</span>
+
+<span class="fc" id="L158">        ShipmentStatus oldStatus = shipment.getStatus();</span>
+<span class="fc" id="L159">        shipment.setStatus(newStatus);</span>
+<span class="fc" id="L160">        Shipment saved = shipmentRepository.save(shipment);</span>
+
+        // Automatically log this status change
+<span class="fc" id="L163">        String actor = getCurrentUserEmail();</span>
+<span class="fc" id="L164">        auditLogService.log(saved, oldStatus, newStatus, actor);</span>
+
+<span class="fc" id="L166">        log.info(&quot;Shipment {} status: {} → {}&quot;, </span>
+<span class="fc" id="L167">                 shipment.getTrackingCode(), oldStatus, newStatus);</span>
+<span class="fc" id="L168">        return ShipmentDTO.fromEntity(saved);</span>
+    }
+
+    // ── Validate Status Transition ────────────────────────────────────────
+    // Rules:
+    // DELIVERED → nothing (final state, cannot change)
+    // CANCELLED → nothing (final state, cannot change)
+    // Otherwise must move forward in the flow
+    private void validateStatusTransition(ShipmentStatus current,
+                                          ShipmentStatus next) {
+<span class="fc bfc" id="L178" title="All 2 branches covered.">        if (current == ShipmentStatus.DELIVERED) {</span>
+<span class="fc" id="L179">            throw new BadRequestException(</span>
+                    &quot;Cannot change status of a DELIVERED shipment&quot;);
+        }
+<span class="pc bpc" id="L182" title="1 of 2 branches missed.">        if (current == ShipmentStatus.CANCELLED) {</span>
+<span class="nc" id="L183">            throw new BadRequestException(</span>
+                    &quot;Cannot change status of a CANCELLED shipment&quot;);
+        }
+
+        // Define the valid forward order
+<span class="fc" id="L188">        int currentOrder = getStatusOrder(current);</span>
+<span class="fc" id="L189">        int nextOrder = getStatusOrder(next);</span>
+
+        // CANCELLED is always allowed from any non-final state
+<span class="fc bfc" id="L192" title="All 2 branches covered.">        if (next == ShipmentStatus.CANCELLED) return;</span>
+
+        // Otherwise must move forward
+<span class="fc bfc" id="L195" title="All 2 branches covered.">        if (nextOrder &lt;= currentOrder) {</span>
+<span class="fc" id="L196">            throw new BadRequestException(</span>
+                    &quot;Invalid status transition: &quot; + current + &quot; → &quot; + next +
+                    &quot;. Status must move forward.&quot;);
+        }
+<span class="fc" id="L200">    }</span>
+
+    private int getStatusOrder(ShipmentStatus status) {
+<span class="pc bpc" id="L203" title="1 of 5 branches missed.">        return switch (status) {</span>
+<span class="fc" id="L204">            case PENDING   -&gt; 1;</span>
+<span class="fc" id="L205">            case PICKED_UP -&gt; 2;</span>
+<span class="fc" id="L206">            case IN_TRANSIT-&gt; 3;</span>
+<span class="nc" id="L207">            case DELIVERED -&gt; 4;</span>
+<span class="fc" id="L208">            case CANCELLED -&gt; 5;</span>
+        };
+    }
+
+    // ── Get Current Logged-In User Email ──────────────────────────────────
+    // Used for audit log — who made this change?
+    private String getCurrentUserEmail() {
+        try {
+<span class="pc" id="L216">            return SecurityContextHolder.getContext()</span>
+<span class="nc" id="L217">                    .getAuthentication().getName();</span>
+<span class="fc" id="L218">        } catch (Exception e) {</span>
+<span class="fc" id="L219">            return &quot;system&quot;;</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
