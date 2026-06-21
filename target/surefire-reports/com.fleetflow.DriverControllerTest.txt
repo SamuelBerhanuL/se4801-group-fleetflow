@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.fleetflow.DriverControllerTest
 -------------------------------------------------------------------------------
-Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.648 s -- in com.fleetflow.DriverControllerTest
+Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.628 s -- in com.fleetflow.DriverControllerTest

@@ -33,21 +33,21 @@ public class WarehouseController {
     @GetMapping
     @PreAuthorize(&quot;hasAnyRole('ADMIN', 'DISPATCHER')&quot;)
     public ResponseEntity&lt;List&lt;WarehouseDTO&gt;&gt; getAll() {
-<span class="nc" id="L36">        return ResponseEntity.ok(warehouseService.getAllWarehouses());</span>
+<span class="fc" id="L36">        return ResponseEntity.ok(warehouseService.getAllWarehouses());</span>
     }
 
     @GetMapping(&quot;/{id}&quot;)
     @PreAuthorize(&quot;hasAnyRole('ADMIN', 'DISPATCHER')&quot;)
     public ResponseEntity&lt;WarehouseDTO&gt; getById(@PathVariable Long id) {
-<span class="nc" id="L42">        return ResponseEntity.ok(warehouseService.getWarehouseById(id));</span>
+<span class="fc" id="L42">        return ResponseEntity.ok(warehouseService.getWarehouseById(id));</span>
     }
 
     @PostMapping
     @PreAuthorize(&quot;hasRole('ADMIN')&quot;)
     public ResponseEntity&lt;WarehouseDTO&gt; create(
             @Valid @RequestBody WarehouseDTO dto) {
-<span class="nc" id="L49">        return ResponseEntity.status(HttpStatus.CREATED)</span>
-<span class="nc" id="L50">                .body(warehouseService.createWarehouse(dto));</span>
+<span class="fc" id="L49">        return ResponseEntity.status(HttpStatus.CREATED)</span>
+<span class="fc" id="L50">                .body(warehouseService.createWarehouse(dto));</span>
     }
 
     @PutMapping(&quot;/{id}&quot;)
@@ -55,14 +55,14 @@ public class WarehouseController {
     public ResponseEntity&lt;WarehouseDTO&gt; update(
             @PathVariable Long id,
             @Valid @RequestBody WarehouseDTO dto) {
-<span class="nc" id="L58">        return ResponseEntity.ok(warehouseService.updateWarehouse(id, dto));</span>
+<span class="fc" id="L58">        return ResponseEntity.ok(warehouseService.updateWarehouse(id, dto));</span>
     }
 
     @DeleteMapping(&quot;/{id}&quot;)
     @PreAuthorize(&quot;hasRole('ADMIN')&quot;)
     public ResponseEntity&lt;Void&gt; delete(@PathVariable Long id) {
-<span class="nc" id="L64">        warehouseService.deleteWarehouse(id);</span>
-<span class="nc" id="L65">        return ResponseEntity.noContent().build();</span>
+<span class="fc" id="L64">        warehouseService.deleteWarehouse(id);</span>
+<span class="fc" id="L65">        return ResponseEntity.noContent().build();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

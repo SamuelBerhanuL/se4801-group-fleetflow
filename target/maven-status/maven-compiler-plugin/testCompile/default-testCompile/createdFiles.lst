@@ -1,8 +1,14 @@
-com\fleetflow\RouteServiceTest.class
-com\fleetflow\WarehouseServiceTest.class
 com\fleetflow\DriverControllerTest.class
+com\fleetflow\WarehouseControllerTest.class
+com\fleetflow\DriverServiceTest.class
 com\fleetflow\AuditLogServiceTest.class
 com\fleetflow\FleetflowApplicationTests.class
 com\fleetflow\ShipmentServiceTest.class
+com\fleetflow\RouteControllerTest.class
+com\fleetflow\RouteServiceTest.class
+com\fleetflow\WarehouseServiceTest.class
+com\fleetflow\VehicleControllerTest.class
+com\fleetflow\AuthControllerTest.class
+com\fleetflow\AuthServiceTest.class
 com\fleetflow\VehicleServiceTest.class
 com\fleetflow\CustomerServiceTest.class
