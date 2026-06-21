@@ -1,5 +1,6 @@
 com\fleetflow\RouteServiceTest.class
 com\fleetflow\WarehouseServiceTest.class
+com\fleetflow\DriverControllerTest.class
 com\fleetflow\AuditLogServiceTest.class
 com\fleetflow\FleetflowApplicationTests.class
 com\fleetflow\ShipmentServiceTest.class

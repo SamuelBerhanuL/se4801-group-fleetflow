@@ -90,10 +90,10 @@ import java.util.Map;
     // Thrown when: a DRIVER tries to call an ADMIN-only endpoint
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity&lt;Map&lt;String, Object&gt;&gt; handleAccessDenied(AccessDeniedException ex) {
-<span class="nc" id="L93">        log.error(&quot;Access denied: {}&quot;, ex.getMessage());</span>
-<span class="nc" id="L94">        return ResponseEntity</span>
-<span class="nc" id="L95">                .status(HttpStatus.FORBIDDEN)</span>
-<span class="nc" id="L96">                .body(buildError(HttpStatus.FORBIDDEN, &quot;You do not have permission to perform this action&quot;));</span>
+<span class="fc" id="L93">        log.error(&quot;Access denied: {}&quot;, ex.getMessage());</span>
+<span class="fc" id="L94">        return ResponseEntity</span>
+<span class="fc" id="L95">                .status(HttpStatus.FORBIDDEN)</span>
+<span class="fc" id="L96">                .body(buildError(HttpStatus.FORBIDDEN, &quot;You do not have permission to perform this action&quot;));</span>
     }
 
     // ── 400: Validation Failed ────────────────────────────────────────────

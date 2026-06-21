@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="com.fleetflow.VehicleServiceTest" time="0.037" tests="8" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="com.fleetflow.DriverControllerTest" time="2.648" tests="10" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="21"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -47,7 +47,7 @@
     <property name="localRepository" value="C:\Users\USER\.m2\repository"/>
     <property name="java.vendor.url.bug" value="https://bugreport.java.com/bugreport/"/>
     <property name="java.io.tmpdir" value="C:\Users\USER\AppData\Local\Temp\"/>
-    <property name="com.zaxxer.hikari.pool_number" value="3"/>
+    <property name="com.zaxxer.hikari.pool_number" value="2"/>
     <property name="java.version" value="21.0.10"/>
     <property name="user.dir" value="C:\Users\USER\Desktop\Enterprise Capstone Project\se4801-group-fleetflow"/>
     <property name="os.arch" value="amd64"/>
@@ -64,18 +64,209 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="65.0"/>
   </properties>
-  <testcase name="createVehicle_throwsException_whenPlateAlreadyExists" classname="com.fleetflow.VehicleServiceTest" time="0.007"/>
-  <testcase name="deleteVehicle_success" classname="com.fleetflow.VehicleServiceTest" time="0.005">
-    <system-out><![CDATA[2026-06-21T15:46:43.107+03:00  INFO 8976 --- [           main] com.fleetflow.service.VehicleService     : Vehicle deleted: id=1
+  <testcase name="getById_returns200" classname="com.fleetflow.DriverControllerTest" time="0.07">
+    <system-out><![CDATA[2026-06-21T15:46:37.815+03:00  INFO 8976 --- [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.fleetflow.DriverControllerTest]: DriverControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-06-21T15:46:37.827+03:00  INFO 8976 --- [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.fleetflow.FleetflowApplication for test class com.fleetflow.DriverControllerTest
+2026-06-21T15:46:37.838+03:00  INFO 8976 --- [           main] o.s.b.d.r.RestartApplicationListener     : Restart disabled due to context in which it is running
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.5.0)
+
+2026-06-21T15:46:37.930+03:00  INFO 8976 --- [           main] com.fleetflow.DriverControllerTest       : Starting DriverControllerTest using Java 21.0.10 with PID 8976 (started by USER in C:\Users\USER\Desktop\Enterprise Capstone Project\se4801-group-fleetflow)
+2026-06-21T15:46:37.930+03:00 DEBUG 8976 --- [           main] com.fleetflow.DriverControllerTest       : Running with Spring Boot v3.5.0, Spring v6.2.7
+2026-06-21T15:46:37.930+03:00  INFO 8976 --- [           main] com.fleetflow.DriverControllerTest       : The following 1 profile is active: "test"
+2026-06-21T15:46:38.617+03:00  INFO 8976 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-06-21T15:46:38.662+03:00  INFO 8976 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 42 ms. Found 8 JPA repository interfaces.
+2026-06-21T15:46:39.032+03:00  INFO 8976 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-06-21T15:46:39.037+03:00  INFO 8976 --- [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-06-21T15:46:39.059+03:00  INFO 8976 --- [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-06-21T15:46:39.061+03:00  INFO 8976 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
+2026-06-21T15:46:39.063+03:00  INFO 8976 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Added connection conn10: url=jdbc:h2:mem:testdb user=SA
+2026-06-21T15:46:39.064+03:00  INFO 8976 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
+2026-06-21T15:46:39.065+03:00  WARN 8976 --- [           main] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-06-21T15:46:39.065+03:00  INFO 8976 --- [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-2)']
+	Database driver: undefined/unknown
+	Database version: 2.3.232
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-06-21T15:46:39.239+03:00  INFO 8976 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+Hibernate: 
+    drop table if exists audit_log cascade 
+Hibernate: 
+    drop table if exists customers cascade 
+Hibernate: 
+    drop table if exists drivers cascade 
+Hibernate: 
+    drop table if exists routes cascade 
+Hibernate: 
+    drop table if exists shipments cascade 
+Hibernate: 
+    drop table if exists users cascade 
+Hibernate: 
+    drop table if exists vehicles cascade 
+Hibernate: 
+    drop table if exists warehouses cascade 
+Hibernate: 
+    create table audit_log (
+        changed_at timestamp(6) not null,
+        id bigint generated by default as identity,
+        shipment_id bigint not null,
+        actor varchar(255) not null,
+        new_status enum ('CANCELLED','DELIVERED','IN_TRANSIT','PENDING','PICKED_UP') not null,
+        old_status enum ('CANCELLED','DELIVERED','IN_TRANSIT','PENDING','PICKED_UP'),
+        primary key (id)
+    )
+Hibernate: 
+    create table customers (
+        created_at timestamp(6) not null,
+        id bigint generated by default as identity,
+        address varchar(255),
+        email varchar(255),
+        full_name varchar(255) not null,
+        phone varchar(255) not null,
+        primary key (id)
+    )
+Hibernate: 
+    create table drivers (
+        available boolean not null,
+        created_at timestamp(6) not null,
+        id bigint generated by default as identity,
+        user_id bigint not null unique,
+        full_name varchar(255) not null,
+        license_number varchar(255) not null unique,
+        phone varchar(255) not null,
+        primary key (id)
+    )
+Hibernate: 
+    create table routes (
+        estimated_hours integer not null,
+        created_at timestamp(6) not null,
+        id bigint generated by default as identity,
+        warehouse_id bigint not null,
+        destination_city varchar(255) not null,
+        name varchar(255) not null,
+        origin_city varchar(255) not null,
+        primary key (id)
+    )
+Hibernate: 
+    create table shipments (
+        weight numeric(38,2),
+        created_at timestamp(6) not null,
+        customer_id bigint not null,
+        driver_id bigint not null,
+        id bigint generated by default as identity,
+        origin_warehouse_id bigint not null,
+        route_id bigint not null,
+        updated_at timestamp(6) not null,
+        vehicle_id bigint not null,
+        description varchar(255),
+        tracking_code varchar(255) not null unique,
+        status enum ('CANCELLED','DELIVERED','IN_TRANSIT','PENDING','PICKED_UP') not null,
+        primary key (id)
+    )
+Hibernate: 
+    create table users (
+        active boolean not null,
+        created_at timestamp(6) not null,
+        id bigint generated by default as identity,
+        email varchar(255) not null unique,
+        password_hash varchar(255) not null,
+        role enum ('ADMIN','DISPATCHER','DRIVER') not null,
+        primary key (id)
+    )
+Hibernate: 
+    create table vehicles (
+        capacity_kg numeric(10,2) not null,
+        created_at timestamp(6) not null,
+        id bigint generated by default as identity,
+        model varchar(255) not null,
+        plate_number varchar(255) not null unique,
+        status enum ('ACTIVE','MAINTENANCE') not null,
+        primary key (id)
+    )
+Hibernate: 
+    create table warehouses (
+        created_at timestamp(6) not null,
+        id bigint generated by default as identity,
+        address varchar(255) not null,
+        city varchar(255) not null,
+        contact_phone varchar(255) not null,
+        name varchar(255) not null,
+        primary key (id)
+    )
+Hibernate: 
+    alter table if exists audit_log 
+       add constraint FKoeq0vk6kxwbtqt934gfh2evib 
+       foreign key (shipment_id) 
+       references shipments
+Hibernate: 
+    alter table if exists drivers 
+       add constraint FKfscpnjt46gco44xh86l99rxh7 
+       foreign key (user_id) 
+       references users
+Hibernate: 
+    alter table if exists routes 
+       add constraint FKcfmlxa5i55b0r4ug1yesrsv3 
+       foreign key (warehouse_id) 
+       references warehouses
+Hibernate: 
+    alter table if exists shipments 
+       add constraint FK4riardtm02dseyjfo3vjrg3o0 
+       foreign key (customer_id) 
+       references customers
+Hibernate: 
+    alter table if exists shipments 
+       add constraint FKskgwh9r3a329eo01gnnb749cf 
+       foreign key (driver_id) 
+       references drivers
+Hibernate: 
+    alter table if exists shipments 
+       add constraint FKbou3geqiq7th4qjx7jhdhq6aj 
+       foreign key (origin_warehouse_id) 
+       references warehouses
+Hibernate: 
+    alter table if exists shipments 
+       add constraint FKquiku8m6gfjyfoghb65rf68h3 
+       foreign key (route_id) 
+       references routes
+Hibernate: 
+    alter table if exists shipments 
+       add constraint FKnajg0k0dstjtsp64u3125burs 
+       foreign key (vehicle_id) 
+       references vehicles
+2026-06-21T15:46:39.302+03:00  INFO 8976 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-06-21T15:46:39.478+03:00  INFO 8976 --- [           main] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2026-06-21T15:46:39.478+03:00  WARN 8976 --- [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2026-06-21T15:46:39.687+03:00  WARN 8976 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-06-21T15:46:40.193+03:00 DEBUG 8976 --- [           main] com.fleetflow.security.JwtAuthFilter     : Filter 'jwtAuthFilter' configured for use
+2026-06-21T15:46:40.193+03:00  INFO 8976 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-06-21T15:46:40.193+03:00  INFO 8976 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-06-21T15:46:40.195+03:00  INFO 8976 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 2 ms
+2026-06-21T15:46:40.207+03:00  INFO 8976 --- [           main] com.fleetflow.DriverControllerTest       : Started DriverControllerTest in 2.37 seconds (process running for 28.968)
 ]]></system-out>
   </testcase>
-  <testcase name="createVehicle_success" classname="com.fleetflow.VehicleServiceTest" time="0.002">
-    <system-out><![CDATA[2026-06-21T15:46:43.110+03:00  INFO 8976 --- [           main] com.fleetflow.service.VehicleService     : Vehicle created: AA-12345
+  <testcase name="getAvailable_returns200" classname="com.fleetflow.DriverControllerTest" time="0.031"/>
+  <testcase name="delete_returns403_forDispatcher" classname="com.fleetflow.DriverControllerTest" time="0.019">
+    <system-out><![CDATA[2026-06-21T15:46:40.326+03:00 ERROR 8976 --- [           main] c.f.exception.GlobalExceptionHandler     : Access denied: Access Denied
 ]]></system-out>
   </testcase>
-  <testcase name="getActiveVehicles_returnsOnlyActiveOnes" classname="com.fleetflow.VehicleServiceTest" time="0.006"/>
-  <testcase name="getVehicleById_throwsException_whenNotFound" classname="com.fleetflow.VehicleServiceTest" time="0.008"/>
-  <testcase name="getVehicleById_success" classname="com.fleetflow.VehicleServiceTest" time="0.003"/>
-  <testcase name="deleteVehicle_throwsException_whenNotFound" classname="com.fleetflow.VehicleServiceTest" time="0.002"/>
-  <testcase name="getActiveVehicles_returnsEmpty_whenNoneActive" classname="com.fleetflow.VehicleServiceTest" time="0.0"/>
+  <testcase name="getAll_returns403_whenNoAuth" classname="com.fleetflow.DriverControllerTest" time="0.01"/>
+  <testcase name="toggleAvailability_returns200" classname="com.fleetflow.DriverControllerTest" time="0.006"/>
+  <testcase name="getAll_returns200_forAdmin" classname="com.fleetflow.DriverControllerTest" time="0.015"/>
+  <testcase name="create_returns201_forAdmin" classname="com.fleetflow.DriverControllerTest" time="0.022"/>
+  <testcase name="create_returns403_forDriverRole" classname="com.fleetflow.DriverControllerTest" time="0.016">
+    <system-out><![CDATA[2026-06-21T15:46:40.417+03:00 ERROR 8976 --- [           main] c.f.exception.GlobalExceptionHandler     : Access denied: Access Denied
+]]></system-out>
+  </testcase>
+  <testcase name="update_returns200_forAdmin" classname="com.fleetflow.DriverControllerTest" time="0.019"/>
+  <testcase name="delete_returns204_forAdmin" classname="com.fleetflow.DriverControllerTest" time="0.016"/>
 </testsuite>

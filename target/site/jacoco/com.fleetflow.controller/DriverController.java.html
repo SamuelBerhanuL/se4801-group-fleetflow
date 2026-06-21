@@ -32,27 +32,27 @@ public class DriverController {
     @GetMapping
     @PreAuthorize(&quot;hasAnyRole('ADMIN', 'DISPATCHER')&quot;)
     public ResponseEntity&lt;List&lt;DriverDTO&gt;&gt; getAll() {
-<span class="nc" id="L35">        return ResponseEntity.ok(driverService.getAllDrivers());</span>
+<span class="fc" id="L35">        return ResponseEntity.ok(driverService.getAllDrivers());</span>
     }
 
     @GetMapping(&quot;/available&quot;)
     @PreAuthorize(&quot;hasAnyRole('ADMIN', 'DISPATCHER')&quot;)
     public ResponseEntity&lt;List&lt;DriverDTO&gt;&gt; getAvailable() {
-<span class="nc" id="L41">        return ResponseEntity.ok(driverService.getAvailableDrivers());</span>
+<span class="fc" id="L41">        return ResponseEntity.ok(driverService.getAvailableDrivers());</span>
     }
 
     @GetMapping(&quot;/{id}&quot;)
     @PreAuthorize(&quot;hasAnyRole('ADMIN', 'DISPATCHER')&quot;)
     public ResponseEntity&lt;DriverDTO&gt; getById(@PathVariable Long id) {
-<span class="nc" id="L47">        return ResponseEntity.ok(driverService.getDriverById(id));</span>
+<span class="fc" id="L47">        return ResponseEntity.ok(driverService.getDriverById(id));</span>
     }
 
     @PostMapping
     @PreAuthorize(&quot;hasRole('ADMIN')&quot;)
     public ResponseEntity&lt;DriverDTO&gt; create(
             @Valid @RequestBody DriverDTO dto) {
-<span class="nc" id="L54">        return ResponseEntity.status(HttpStatus.CREATED)</span>
-<span class="nc" id="L55">                .body(driverService.createDriver(dto));</span>
+<span class="fc" id="L54">        return ResponseEntity.status(HttpStatus.CREATED)</span>
+<span class="fc" id="L55">                .body(driverService.createDriver(dto));</span>
     }
 
     @PutMapping(&quot;/{id}&quot;)
@@ -60,21 +60,21 @@ public class DriverController {
     public ResponseEntity&lt;DriverDTO&gt; update(
             @PathVariable Long id,
             @Valid @RequestBody DriverDTO dto) {
-<span class="nc" id="L63">        return ResponseEntity.ok(driverService.updateDriver(id, dto));</span>
+<span class="fc" id="L63">        return ResponseEntity.ok(driverService.updateDriver(id, dto));</span>
     }
 
     @PatchMapping(&quot;/{id}/toggle&quot;)
     @PreAuthorize(&quot;hasAnyRole('ADMIN', 'DISPATCHER')&quot;)
     public ResponseEntity&lt;DriverDTO&gt; toggleAvailability(
             @PathVariable Long id) {
-<span class="nc" id="L70">        return ResponseEntity.ok(driverService.toggleAvailability(id));</span>
+<span class="fc" id="L70">        return ResponseEntity.ok(driverService.toggleAvailability(id));</span>
     }
 
     @DeleteMapping(&quot;/{id}&quot;)
     @PreAuthorize(&quot;hasRole('ADMIN')&quot;)
     public ResponseEntity&lt;Void&gt; delete(@PathVariable Long id) {
-<span class="nc" id="L76">        driverService.deleteDriver(id);</span>
-<span class="nc" id="L77">        return ResponseEntity.noContent().build();</span>
+<span class="fc" id="L76">        driverService.deleteDriver(id);</span>
+<span class="fc" id="L77">        return ResponseEntity.noContent().build();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
