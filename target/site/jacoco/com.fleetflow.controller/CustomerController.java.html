@@ -31,28 +31,28 @@ public class CustomerController {
     @GetMapping
     @PreAuthorize(&quot;hasAnyRole('ADMIN', 'DISPATCHER')&quot;)
     public ResponseEntity&lt;List&lt;CustomerDTO&gt;&gt; getAll() {
-<span class="nc" id="L34">        return ResponseEntity.ok(customerService.getAllCustomers());</span>
+<span class="fc" id="L34">        return ResponseEntity.ok(customerService.getAllCustomers());</span>
     }
 
     @GetMapping(&quot;/{id}&quot;)
     @PreAuthorize(&quot;hasAnyRole('ADMIN', 'DISPATCHER')&quot;)
     public ResponseEntity&lt;CustomerDTO&gt; getById(@PathVariable Long id) {
-<span class="nc" id="L40">        return ResponseEntity.ok(customerService.getCustomerById(id));</span>
+<span class="fc" id="L40">        return ResponseEntity.ok(customerService.getCustomerById(id));</span>
     }
 
     @GetMapping(&quot;/search&quot;)
     @PreAuthorize(&quot;hasAnyRole('ADMIN', 'DISPATCHER')&quot;)
     public ResponseEntity&lt;List&lt;CustomerDTO&gt;&gt; search(
             @RequestParam String name) {
-<span class="nc" id="L47">        return ResponseEntity.ok(customerService.searchByName(name));</span>
+<span class="fc" id="L47">        return ResponseEntity.ok(customerService.searchByName(name));</span>
     }
 
     @PostMapping
     @PreAuthorize(&quot;hasAnyRole('ADMIN', 'DISPATCHER')&quot;)
     public ResponseEntity&lt;CustomerDTO&gt; create(
             @Valid @RequestBody CustomerDTO dto) {
-<span class="nc" id="L54">        return ResponseEntity.status(HttpStatus.CREATED)</span>
-<span class="nc" id="L55">                .body(customerService.createCustomer(dto));</span>
+<span class="fc" id="L54">        return ResponseEntity.status(HttpStatus.CREATED)</span>
+<span class="fc" id="L55">                .body(customerService.createCustomer(dto));</span>
     }
 
     @PutMapping(&quot;/{id}&quot;)
@@ -60,14 +60,14 @@ public class CustomerController {
     public ResponseEntity&lt;CustomerDTO&gt; update(
             @PathVariable Long id,
             @Valid @RequestBody CustomerDTO dto) {
-<span class="nc" id="L63">        return ResponseEntity.ok(customerService.updateCustomer(id, dto));</span>
+<span class="fc" id="L63">        return ResponseEntity.ok(customerService.updateCustomer(id, dto));</span>
     }
 
     @DeleteMapping(&quot;/{id}&quot;)
     @PreAuthorize(&quot;hasRole('ADMIN')&quot;)
     public ResponseEntity&lt;Void&gt; delete(@PathVariable Long id) {
-<span class="nc" id="L69">        customerService.deleteCustomer(id);</span>
-<span class="nc" id="L70">        return ResponseEntity.noContent().build();</span>
+<span class="fc" id="L69">        customerService.deleteCustomer(id);</span>
+<span class="fc" id="L70">        return ResponseEntity.noContent().build();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

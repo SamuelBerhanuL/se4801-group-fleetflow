@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="com.fleetflow.DriverControllerTest" time="1.901" tests="10" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="com.fleetflow.CustomerControllerTest" time="1.851" tests="8" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="21"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -48,7 +48,7 @@
     <property name="localRepository" value="C:\Users\Miki\.m2\repository"/>
     <property name="java.vendor.url.bug" value="https://github.com/microsoft/openjdk/issues"/>
     <property name="java.io.tmpdir" value="C:\Users\Miki\AppData\Local\Temp\"/>
-    <property name="com.zaxxer.hikari.pool_number" value="4"/>
+    <property name="com.zaxxer.hikari.pool_number" value="3"/>
     <property name="java.version" value="21.0.10"/>
     <property name="user.dir" value="C:\Users\Miki\Documents\se4801-group-fleetflow"/>
     <property name="os.arch" value="amd64"/>
@@ -65,10 +65,10 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="65.0"/>
   </properties>
-  <testcase name="getById_returns200" classname="com.fleetflow.DriverControllerTest" time="0.032">
-    <system-out><![CDATA[2026-06-22T03:32:56.076-09:00  INFO 24676 --- [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.fleetflow.DriverControllerTest]: DriverControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-2026-06-22T03:32:56.081-09:00  INFO 24676 --- [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.fleetflow.FleetflowApplication for test class com.fleetflow.DriverControllerTest
-2026-06-22T03:32:56.092-09:00  INFO 24676 --- [           main] o.s.b.d.r.RestartApplicationListener     : Restart disabled due to context in which it is running
+  <testcase name="getById_returns200" classname="com.fleetflow.CustomerControllerTest" time="0.027">
+    <system-out><![CDATA[2026-06-22T03:32:53.978-09:00  INFO 24676 --- [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.fleetflow.CustomerControllerTest]: CustomerControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-06-22T03:32:53.984-09:00  INFO 24676 --- [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.fleetflow.FleetflowApplication for test class com.fleetflow.CustomerControllerTest
+2026-06-22T03:32:53.992-09:00  INFO 24676 --- [           main] o.s.b.d.r.RestartApplicationListener     : Restart disabled due to context in which it is running
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -79,27 +79,27 @@
 
  :: Spring Boot ::                (v3.5.0)
 
-2026-06-22T03:32:56.164-09:00  INFO 24676 --- [           main] com.fleetflow.DriverControllerTest       : Starting DriverControllerTest using Java 21.0.10 with PID 24676 (started by Miki in C:\Users\Miki\Documents\se4801-group-fleetflow)
-2026-06-22T03:32:56.164-09:00 DEBUG 24676 --- [           main] com.fleetflow.DriverControllerTest       : Running with Spring Boot v3.5.0, Spring v6.2.7
-2026-06-22T03:32:56.164-09:00  INFO 24676 --- [           main] com.fleetflow.DriverControllerTest       : The following 1 profile is active: "test"
-2026-06-22T03:32:56.552-09:00  INFO 24676 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2026-06-22T03:32:56.580-09:00  INFO 24676 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 27 ms. Found 8 JPA repository interfaces.
-2026-06-22T03:32:56.825-09:00  INFO 24676 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2026-06-22T03:32:56.830-09:00  INFO 24676 --- [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2026-06-22T03:32:56.846-09:00  INFO 24676 --- [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2026-06-22T03:32:56.848-09:00  INFO 24676 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Starting...
-2026-06-22T03:32:56.850-09:00  INFO 24676 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-4 - Added connection conn30: url=jdbc:h2:mem:testdb user=SA
-2026-06-22T03:32:56.851-09:00  INFO 24676 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Start completed.
-2026-06-22T03:32:56.852-09:00  WARN 24676 --- [           main] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2026-06-22T03:32:56.852-09:00  INFO 24676 --- [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
-	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-4)']
+2026-06-22T03:32:54.079-09:00  INFO 24676 --- [           main] com.fleetflow.CustomerControllerTest     : Starting CustomerControllerTest using Java 21.0.10 with PID 24676 (started by Miki in C:\Users\Miki\Documents\se4801-group-fleetflow)
+2026-06-22T03:32:54.079-09:00 DEBUG 24676 --- [           main] com.fleetflow.CustomerControllerTest     : Running with Spring Boot v3.5.0, Spring v6.2.7
+2026-06-22T03:32:54.079-09:00  INFO 24676 --- [           main] com.fleetflow.CustomerControllerTest     : The following 1 profile is active: "test"
+2026-06-22T03:32:54.477-09:00  INFO 24676 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-06-22T03:32:54.512-09:00  INFO 24676 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 33 ms. Found 8 JPA repository interfaces.
+2026-06-22T03:32:54.762-09:00  INFO 24676 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-06-22T03:32:54.766-09:00  INFO 24676 --- [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-06-22T03:32:54.782-09:00  INFO 24676 --- [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-06-22T03:32:54.784-09:00  INFO 24676 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Starting...
+2026-06-22T03:32:54.786-09:00  INFO 24676 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-3 - Added connection conn20: url=jdbc:h2:mem:testdb user=SA
+2026-06-22T03:32:54.786-09:00  INFO 24676 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Start completed.
+2026-06-22T03:32:54.787-09:00  WARN 24676 --- [           main] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-06-22T03:32:54.788-09:00  INFO 24676 --- [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-3)']
 	Database driver: undefined/unknown
 	Database version: 2.3.232
 	Autocommit mode: undefined/unknown
 	Isolation level: undefined/unknown
 	Minimum pool size: undefined/unknown
 	Maximum pool size: undefined/unknown
-2026-06-22T03:32:57.027-09:00  INFO 24676 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-06-22T03:32:54.986-09:00  INFO 24676 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
 Hibernate: 
     drop table if exists audit_log cascade 
 Hibernate: 
@@ -244,30 +244,25 @@ Hibernate:
        add constraint FKnajg0k0dstjtsp64u3125burs 
        foreign key (vehicle_id) 
        references vehicles
-2026-06-22T03:32:57.096-09:00  INFO 24676 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2026-06-22T03:32:57.247-09:00  INFO 24676 --- [           main] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
-2026-06-22T03:32:57.248-09:00  WARN 24676 --- [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
-2026-06-22T03:32:57.429-09:00  WARN 24676 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2026-06-22T03:32:57.798-09:00 DEBUG 24676 --- [           main] com.fleetflow.security.JwtAuthFilter     : Filter 'jwtAuthFilter' configured for use
-2026-06-22T03:32:57.798-09:00  INFO 24676 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
-2026-06-22T03:32:57.798-09:00  INFO 24676 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2026-06-22T03:32:57.799-09:00  INFO 24676 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
-2026-06-22T03:32:57.816-09:00  INFO 24676 --- [           main] com.fleetflow.DriverControllerTest       : Started DriverControllerTest in 1.725 seconds (process running for 32.87)
+2026-06-22T03:32:55.035-09:00  INFO 24676 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-06-22T03:32:55.182-09:00  INFO 24676 --- [           main] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2026-06-22T03:32:55.182-09:00  WARN 24676 --- [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2026-06-22T03:32:55.323-09:00  WARN 24676 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-06-22T03:32:55.619-09:00 DEBUG 24676 --- [           main] com.fleetflow.security.JwtAuthFilter     : Filter 'jwtAuthFilter' configured for use
+2026-06-22T03:32:55.619-09:00  INFO 24676 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-06-22T03:32:55.619-09:00  INFO 24676 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-06-22T03:32:55.620-09:00  INFO 24676 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2026-06-22T03:32:55.634-09:00  INFO 24676 --- [           main] com.fleetflow.CustomerControllerTest     : Started CustomerControllerTest in 1.643 seconds (process running for 30.688)
 ]]></system-out>
   </testcase>
-  <testcase name="getAvailable_returns200" classname="com.fleetflow.DriverControllerTest" time="0.018"/>
-  <testcase name="delete_returns403_forDispatcher" classname="com.fleetflow.DriverControllerTest" time="0.011">
-    <system-out><![CDATA[2026-06-22T03:32:57.879-09:00 ERROR 24676 --- [           main] c.f.exception.GlobalExceptionHandler     : Access denied: Access Denied
+  <testcase name="search_returns200" classname="com.fleetflow.CustomerControllerTest" time="0.036"/>
+  <testcase name="update_returns200" classname="com.fleetflow.CustomerControllerTest" time="0.028"/>
+  <testcase name="getAll_returns200" classname="com.fleetflow.CustomerControllerTest" time="0.015"/>
+  <testcase name="create_returns403_forDriver" classname="com.fleetflow.CustomerControllerTest" time="0.017">
+    <system-out><![CDATA[2026-06-22T03:32:55.759-09:00 ERROR 24676 --- [           main] c.f.exception.GlobalExceptionHandler     : Access denied: Access Denied
 ]]></system-out>
   </testcase>
-  <testcase name="getAll_returns403_whenNoAuth" classname="com.fleetflow.DriverControllerTest" time="0.006"/>
-  <testcase name="toggleAvailability_returns200" classname="com.fleetflow.DriverControllerTest" time="0.011"/>
-  <testcase name="getAll_returns200_forAdmin" classname="com.fleetflow.DriverControllerTest" time="0.012"/>
-  <testcase name="create_returns201_forAdmin" classname="com.fleetflow.DriverControllerTest" time="0.018"/>
-  <testcase name="create_returns403_forDriverRole" classname="com.fleetflow.DriverControllerTest" time="0.011">
-    <system-out><![CDATA[2026-06-22T03:32:57.946-09:00 ERROR 24676 --- [           main] c.f.exception.GlobalExceptionHandler     : Access denied: Access Denied
-]]></system-out>
-  </testcase>
-  <testcase name="update_returns200_forAdmin" classname="com.fleetflow.DriverControllerTest" time="0.015"/>
-  <testcase name="delete_returns204_forAdmin" classname="com.fleetflow.DriverControllerTest" time="0.009"/>
+  <testcase name="getAll_returns403_whenNoAuth" classname="com.fleetflow.CustomerControllerTest" time="0.014"/>
+  <testcase name="delete_returns204" classname="com.fleetflow.CustomerControllerTest" time="0.021"/>
+  <testcase name="create_returns201" classname="com.fleetflow.CustomerControllerTest" time="0.015"/>
 </testsuite>
