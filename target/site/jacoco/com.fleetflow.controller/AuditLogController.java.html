@@ -28,8 +28,8 @@ public class AuditLogController {
     @PreAuthorize(&quot;hasAnyRole('ADMIN', 'DISPATCHER')&quot;)
     public ResponseEntity&lt;List&lt;AuditLogDTO&gt;&gt; getLogs(
             @PathVariable Long shipmentId) {
-<span class="nc" id="L31">        return ResponseEntity.ok(</span>
-<span class="nc" id="L32">                auditLogService.getLogsForShipment(shipmentId));</span>
+<span class="fc" id="L31">        return ResponseEntity.ok(</span>
+<span class="fc" id="L32">                auditLogService.getLogsForShipment(shipmentId));</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

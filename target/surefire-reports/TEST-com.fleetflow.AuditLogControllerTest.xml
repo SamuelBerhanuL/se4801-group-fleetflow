@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="com.fleetflow.AuditLogServiceTest" time="0.624" tests="4" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="com.fleetflow.AuditLogControllerTest" time="20.152" tests="4" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="21"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -65,14 +65,207 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="65.0"/>
   </properties>
-  <testcase name="log_worksWithNullOldStatus_forNewShipment" classname="com.fleetflow.AuditLogServiceTest" time="0.536">
-    <system-out><![CDATA[2026-06-22T04:15:04.426-09:00  INFO 23448 --- [           main] com.fleetflow.service.AuditLogService    : Audit log: dispatcher@fleetflow.com changed shipment FF-A1B2C3D4 from null to PENDING
+  <testcase name="getLogs_returns200_forDispatcher" classname="com.fleetflow.AuditLogControllerTest" time="0.443">
+    <system-out><![CDATA[04:14:44.319 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.fleetflow.AuditLogControllerTest]: AuditLogControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+04:14:44.773 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.fleetflow.FleetflowApplication for test class com.fleetflow.AuditLogControllerTest
+04:14:45.544 [main] INFO org.springframework.boot.devtools.restart.RestartApplicationListener -- Restart disabled due to context in which it is running
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.5.0)
+
+2026-06-22T04:14:46.680-09:00  INFO 23448 --- [           main] com.fleetflow.AuditLogControllerTest     : Starting AuditLogControllerTest using Java 21.0.10 with PID 23448 (started by Miki in C:\Users\Miki\Documents\se4801-group-fleetflow)
+2026-06-22T04:14:46.682-09:00 DEBUG 23448 --- [           main] com.fleetflow.AuditLogControllerTest     : Running with Spring Boot v3.5.0, Spring v6.2.7
+2026-06-22T04:14:46.682-09:00  INFO 23448 --- [           main] com.fleetflow.AuditLogControllerTest     : The following 1 profile is active: "test"
+2026-06-22T04:14:49.162-09:00  INFO 23448 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-06-22T04:14:49.358-09:00  INFO 23448 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 173 ms. Found 8 JPA repository interfaces.
+2026-06-22T04:14:53.829-09:00  INFO 23448 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-06-22T04:14:54.041-09:00  INFO 23448 --- [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.15.Final
+2026-06-22T04:14:54.209-09:00  INFO 23448 --- [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-06-22T04:14:54.692-09:00  INFO 23448 --- [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-06-22T04:14:54.820-09:00  INFO 23448 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-06-22T04:14:55.697-09:00  INFO 23448 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=SA
+2026-06-22T04:14:55.703-09:00  INFO 23448 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-06-22T04:14:55.807-09:00  WARN 23448 --- [           main] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-06-22T04:14:55.932-09:00  INFO 23448 --- [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 2.3.232
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-06-22T04:14:58.955-09:00  INFO 23448 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+Hibernate: 
+    drop table if exists audit_log cascade 
+Hibernate: 
+    drop table if exists customers cascade 
+Hibernate: 
+    drop table if exists drivers cascade 
+Hibernate: 
+    drop table if exists routes cascade 
+Hibernate: 
+    drop table if exists shipments cascade 
+Hibernate: 
+    drop table if exists users cascade 
+Hibernate: 
+    drop table if exists vehicles cascade 
+Hibernate: 
+    drop table if exists warehouses cascade 
+Hibernate: 
+    create table audit_log (
+        changed_at timestamp(6) not null,
+        id bigint generated by default as identity,
+        shipment_id bigint not null,
+        actor varchar(255) not null,
+        new_status enum ('CANCELLED','DELIVERED','IN_TRANSIT','PENDING','PICKED_UP') not null,
+        old_status enum ('CANCELLED','DELIVERED','IN_TRANSIT','PENDING','PICKED_UP'),
+        primary key (id)
+    )
+Hibernate: 
+    create table customers (
+        created_at timestamp(6) not null,
+        id bigint generated by default as identity,
+        address varchar(255),
+        email varchar(255),
+        full_name varchar(255) not null,
+        phone varchar(255) not null,
+        primary key (id)
+    )
+Hibernate: 
+    create table drivers (
+        available boolean not null,
+        created_at timestamp(6) not null,
+        id bigint generated by default as identity,
+        user_id bigint not null unique,
+        full_name varchar(255) not null,
+        license_number varchar(255) not null unique,
+        phone varchar(255) not null,
+        primary key (id)
+    )
+Hibernate: 
+    create table routes (
+        estimated_hours integer not null,
+        created_at timestamp(6) not null,
+        id bigint generated by default as identity,
+        warehouse_id bigint not null,
+        destination_city varchar(255) not null,
+        name varchar(255) not null,
+        origin_city varchar(255) not null,
+        primary key (id)
+    )
+Hibernate: 
+    create table shipments (
+        weight numeric(38,2),
+        created_at timestamp(6) not null,
+        customer_id bigint not null,
+        driver_id bigint not null,
+        id bigint generated by default as identity,
+        origin_warehouse_id bigint not null,
+        route_id bigint not null,
+        updated_at timestamp(6) not null,
+        vehicle_id bigint not null,
+        description varchar(255),
+        tracking_code varchar(255) not null unique,
+        status enum ('CANCELLED','DELIVERED','IN_TRANSIT','PENDING','PICKED_UP') not null,
+        primary key (id)
+    )
+Hibernate: 
+    create table users (
+        active boolean not null,
+        created_at timestamp(6) not null,
+        id bigint generated by default as identity,
+        email varchar(255) not null unique,
+        password_hash varchar(255) not null,
+        role enum ('ADMIN','DISPATCHER','DRIVER') not null,
+        primary key (id)
+    )
+Hibernate: 
+    create table vehicles (
+        capacity_kg numeric(10,2) not null,
+        created_at timestamp(6) not null,
+        id bigint generated by default as identity,
+        model varchar(255) not null,
+        plate_number varchar(255) not null unique,
+        status enum ('ACTIVE','MAINTENANCE') not null,
+        primary key (id)
+    )
+Hibernate: 
+    create table warehouses (
+        created_at timestamp(6) not null,
+        id bigint generated by default as identity,
+        address varchar(255) not null,
+        city varchar(255) not null,
+        contact_phone varchar(255) not null,
+        name varchar(255) not null,
+        primary key (id)
+    )
+Hibernate: 
+    alter table if exists audit_log 
+       add constraint FKoeq0vk6kxwbtqt934gfh2evib 
+       foreign key (shipment_id) 
+       references shipments
+Hibernate: 
+    alter table if exists drivers 
+       add constraint FKfscpnjt46gco44xh86l99rxh7 
+       foreign key (user_id) 
+       references users
+Hibernate: 
+    alter table if exists routes 
+       add constraint FKcfmlxa5i55b0r4ug1yesrsv3 
+       foreign key (warehouse_id) 
+       references warehouses
+Hibernate: 
+    alter table if exists shipments 
+       add constraint FK4riardtm02dseyjfo3vjrg3o0 
+       foreign key (customer_id) 
+       references customers
+Hibernate: 
+    alter table if exists shipments 
+       add constraint FKskgwh9r3a329eo01gnnb749cf 
+       foreign key (driver_id) 
+       references drivers
+Hibernate: 
+    alter table if exists shipments 
+       add constraint FKbou3geqiq7th4qjx7jhdhq6aj 
+       foreign key (origin_warehouse_id) 
+       references warehouses
+Hibernate: 
+    alter table if exists shipments 
+       add constraint FKquiku8m6gfjyfoghb65rf68h3 
+       foreign key (route_id) 
+       references routes
+Hibernate: 
+    alter table if exists shipments 
+       add constraint FKnajg0k0dstjtsp64u3125burs 
+       foreign key (vehicle_id) 
+       references vehicles
+2026-06-22T04:14:59.234-09:00  INFO 23448 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-06-22T04:15:00.283-09:00  INFO 23448 --- [           main] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2026-06-22T04:15:00.283-09:00  WARN 23448 --- [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2026-06-22T04:15:01.096-09:00  WARN 23448 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-06-22T04:15:03.062-09:00 DEBUG 23448 --- [           main] com.fleetflow.security.JwtAuthFilter     : Filter 'jwtAuthFilter' configured for use
+2026-06-22T04:15:03.078-09:00  INFO 23448 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-06-22T04:15:03.078-09:00  INFO 23448 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-06-22T04:15:03.078-09:00  INFO 23448 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2026-06-22T04:15:03.143-09:00  INFO 23448 --- [           main] com.fleetflow.AuditLogControllerTest     : Started AuditLogControllerTest in 17.647 seconds (process running for 21.989)
 ]]></system-out>
+    <system-err><![CDATA[Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+WARNING: A Java agent has been loaded dynamically (C:\Users\Miki\.m2\repository\net\bytebuddy\byte-buddy-agent\1.17.5\byte-buddy-agent-1.17.5.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+]]></system-err>
   </testcase>
-  <testcase name="getLogsForShipment_returnsLogsInOrder" classname="com.fleetflow.AuditLogServiceTest" time="0.017"/>
-  <testcase name="getLogsForShipment_throwsException_whenShipmentNotFound" classname="com.fleetflow.AuditLogServiceTest" time="0.034"/>
-  <testcase name="log_createsAuditEntry_withCorrectFields" classname="com.fleetflow.AuditLogServiceTest" time="0.03">
-    <system-out><![CDATA[2026-06-22T04:15:04.506-09:00  INFO 23448 --- [           main] com.fleetflow.service.AuditLogService    : Audit log: dispatcher@fleetflow.com changed shipment FF-A1B2C3D4 from PENDING to PICKED_UP
+  <testcase name="getLogs_returns200" classname="com.fleetflow.AuditLogControllerTest" time="0.092"/>
+  <testcase name="getLogs_returns403_whenNoAuth" classname="com.fleetflow.AuditLogControllerTest" time="0.018"/>
+  <testcase name="getLogs_returns403_forDriver" classname="com.fleetflow.AuditLogControllerTest" time="0.033">
+    <system-out><![CDATA[2026-06-22T04:15:03.841-09:00 ERROR 23448 --- [           main] c.f.exception.GlobalExceptionHandler     : Access denied: Access Denied
 ]]></system-out>
   </testcase>
 </testsuite>
