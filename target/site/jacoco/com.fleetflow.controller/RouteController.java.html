@@ -31,29 +31,29 @@ public class RouteController {
     @GetMapping
     @PreAuthorize(&quot;hasAnyRole('ADMIN', 'DISPATCHER')&quot;)
     public ResponseEntity&lt;List&lt;RouteDTO&gt;&gt; getAll() {
-<span class="nc" id="L34">        return ResponseEntity.ok(routeService.getAllRoutes());</span>
+<span class="fc" id="L34">        return ResponseEntity.ok(routeService.getAllRoutes());</span>
     }
 
     @GetMapping(&quot;/{id}&quot;)
     @PreAuthorize(&quot;hasAnyRole('ADMIN', 'DISPATCHER')&quot;)
     public ResponseEntity&lt;RouteDTO&gt; getById(@PathVariable Long id) {
-<span class="nc" id="L40">        return ResponseEntity.ok(routeService.getRouteById(id));</span>
+<span class="fc" id="L40">        return ResponseEntity.ok(routeService.getRouteById(id));</span>
     }
 
     @GetMapping(&quot;/warehouse/{warehouseId}&quot;)
     @PreAuthorize(&quot;hasAnyRole('ADMIN', 'DISPATCHER')&quot;)
     public ResponseEntity&lt;List&lt;RouteDTO&gt;&gt; getByWarehouse(
             @PathVariable Long warehouseId) {
-<span class="nc" id="L47">        return ResponseEntity.ok(</span>
-<span class="nc" id="L48">                routeService.getRoutesByWarehouse(warehouseId));</span>
+<span class="fc" id="L47">        return ResponseEntity.ok(</span>
+<span class="fc" id="L48">                routeService.getRoutesByWarehouse(warehouseId));</span>
     }
 
     @PostMapping
     @PreAuthorize(&quot;hasRole('ADMIN')&quot;)
     public ResponseEntity&lt;RouteDTO&gt; create(
             @Valid @RequestBody RouteDTO dto) {
-<span class="nc" id="L55">        return ResponseEntity.status(HttpStatus.CREATED)</span>
-<span class="nc" id="L56">                .body(routeService.createRoute(dto));</span>
+<span class="fc" id="L55">        return ResponseEntity.status(HttpStatus.CREATED)</span>
+<span class="fc" id="L56">                .body(routeService.createRoute(dto));</span>
     }
 
     @PutMapping(&quot;/{id}&quot;)
@@ -61,14 +61,14 @@ public class RouteController {
     public ResponseEntity&lt;RouteDTO&gt; update(
             @PathVariable Long id,
             @Valid @RequestBody RouteDTO dto) {
-<span class="nc" id="L64">        return ResponseEntity.ok(routeService.updateRoute(id, dto));</span>
+<span class="fc" id="L64">        return ResponseEntity.ok(routeService.updateRoute(id, dto));</span>
     }
 
     @DeleteMapping(&quot;/{id}&quot;)
     @PreAuthorize(&quot;hasRole('ADMIN')&quot;)
     public ResponseEntity&lt;Void&gt; delete(@PathVariable Long id) {
-<span class="nc" id="L70">        routeService.deleteRoute(id);</span>
-<span class="nc" id="L71">        return ResponseEntity.noContent().build();</span>
+<span class="fc" id="L70">        routeService.deleteRoute(id);</span>
+<span class="fc" id="L71">        return ResponseEntity.noContent().build();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

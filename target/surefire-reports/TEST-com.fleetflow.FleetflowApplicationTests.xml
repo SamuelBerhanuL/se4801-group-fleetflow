@@ -11,7 +11,7 @@
     <property name="java.vendor.url" value="https://www.microsoft.com"/>
     <property name="user.timezone" value="Etc/GMT+9"/>
     <property name="org.jboss.logging.provider" value="slf4j"/>
-    <property name="os.name" value="Windows 11"/>
+    <property name="os.name" value="Windows 10"/>
     <property name="java.vm.specification.version" value="21"/>
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="US"/>
