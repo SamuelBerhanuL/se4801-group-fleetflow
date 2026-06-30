@@ -126,6 +126,15 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- JaCoCo runtime for offline instrumentation (no agent needed) -->
+        <dependency>
+            <groupId>org.jacoco</groupId>
+            <artifactId>org.jacoco.agent</artifactId>
+            <version>0.8.11</version>
+            <classifier>runtime</classifier>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -179,24 +188,56 @@
                 </executions>
             </plugin>
 
-            <!-- ── NEW: JaCoCo — measures test coverage ── -->
-            <!-- Run: mvn test   then open: target/site/jacoco/index.html -->
-            <!-- Must show at least 70% coverage for the teacher -->
+            <!-- ── JaCoCo — offline instrumentation mode ── -->
+            <!-- Offline mode instruments bytecode at compile time,
+                 so NO -javaagent is needed. This avoids the Windows
+                 path-with-spaces bug ("Enterprise Capstone Project")
+                 that broke the agent approach.
+                 Run: mvn verify
+                 Then open: target/site/jacoco/index.html -->
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>0.8.11</version>
                 <executions>
+                    <!-- 1. Instrument main classes before tests compile -->
                     <execution>
-                        <id>prepare-agent</id>
-                        <goals><goal>prepare-agent</goal></goals>
+                        <id>instrument-classes</id>
+                        <phase>process-classes</phase>
+                        <goals><goal>instrument</goal></goals>
                     </execution>
+                    <!-- 2. Restore original classes for the final JAR -->
+                    <execution>
+                        <id>restore-classes</id>
+                        <phase>prepare-package</phase>
+                        <goals><goal>restore-instrumented-classes</goal></goals>
+                    </execution>
+                    <!-- 3. Generate HTML report after tests -->
                     <execution>
                         <id>report</id>
-                        <phase>test</phase>
+                        <phase>verify</phase>
                         <goals><goal>report</goal></goals>
+                        <configuration>
+                            <dataFile>${user.home}/fleetflow-jacoco.exec</dataFile>
+                            <outputDirectory>${project.build.directory}/site/jacoco</outputDirectory>
+                        </configuration>
                     </execution>
                 </executions>
+            </plugin>
+
+            <!-- ── Maven Surefire — runs tests in-process ── -->
+            <!-- forkCount=0: no forked JVM, avoids path-with-spaces on Windows.
+                 jacoco-agent.destfile tells the offline instrumentation runtime
+                 where to write the coverage data file. -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <forkCount>0</forkCount>
+                    <systemPropertyVariables>
+                        <jacoco-agent.destfile>${user.home}/fleetflow-jacoco.exec</jacoco-agent.destfile>
+                    </systemPropertyVariables>
+                </configuration>
             </plugin>
 
         </plugins>

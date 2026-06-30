@@ -47,23 +47,23 @@ services:
       timeout: 5s
       retries: 5
 
-  # ── Spring Boot App (optional - for full docker deployment) ──
-  # Uncomment this section ONLY when deploying to production.
-  # During development, run the app from IntelliJ instead.
-  #
-  # app:
-  #   build: .
-  #   container_name: fleetflow_app
-  #   ports:
-  #     - "8080:8080"
-  #   environment:
-  #     SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/fleetflow_db
-  #     SPRING_DATASOURCE_USERNAME: fleetflow_user
-  #     SPRING_DATASOURCE_PASSWORD: fleetflow_pass
-  #     JWT_SECRET: your-production-secret-here
-  #   depends_on:
-  #     db:
-  #       condition: service_healthy
+  # ── Spring Boot App ─────────────────────────────────────────
+  # Builds the app from the Dockerfile and connects to the db.
+  # Environment variables override application.properties values.
+  app:
+    build: .
+    container_name: fleetflow_app
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/fleetflow_db
+      SPRING_DATASOURCE_USERNAME: fleetflow_user
+      SPRING_DATASOURCE_PASSWORD: fleetflow_pass
+      JWT_SECRET: ${JWT_SECRET:-fleetflow-docker-secret-key-change-in-production-must-be-long}
+    depends_on:
+      db:
+        condition: service_healthy
 
 # ── Volumes ────────────────────────────────────────────
 # Named volumes persist data between docker-compose restarts.
