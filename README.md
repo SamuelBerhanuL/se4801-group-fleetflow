@@ -48,7 +48,7 @@ fleetflow/
 
 ```bash
 # Clone the repository
-git clone https://github.com/YOUR_USERNAME/se4801-group-fleetflow.git
+git clone https://github.com/SamuelBerhanuL/se4801-group-fleetflow.git
 cd se4801-group-fleetflow
 
 # Start everything (database + app)
