@@ -125,7 +125,7 @@ open target/site/jacoco/index.html
 | Service   | URL |
 |-----------|-----|
 | **Backend API**  | [https://se4801-group-fleetflow-production.up.railway.app](https://se4801-group-fleetflow-production.up.railway.app) |
-| **Frontend App** | *(Deployed on Vercel — add your URL here)* |
+| **Frontend App** | [https://fleetflow-frontend-git-main-samberhanuclassno67-5773s-projects.vercel.app](https://fleetflow-frontend-git-main-samberhanuclassno67-5773s-projects.vercel.app) |
 | **Swagger UI**   | [https://se4801-group-fleetflow-production.up.railway.app/swagger-ui.html](https://se4801-group-fleetflow-production.up.railway.app/swagger-ui.html) |
 
 ---
@@ -149,9 +149,9 @@ open target/site/jacoco/index.html
 
 | Name | Role | Contribution |
 |------|------|-------------|
-| *(Add your name)* | Group Leader | *(Add contribution)* |
-| *(Add member)* | Developer | *(Add contribution)* |
-| *(Add member)* | Developer | *(Add contribution)* |
+| *Samuel Berhanu* | Group Leader | Project architecture, JWT authentication & authorization, Spring Security configuration, user management, Docker setup & Railway deployment |
+| *Yordanos* | Developer | Warehouse, Vehicle, and Route modules — entity design, service layer, REST controllers, and unit tests |
+| *Loza Wondwossen* | Developer | Shipment and Audit Log modules — shipment lifecycle management, status tracking, audit trail, and Angular frontend integration |
 
 ---
 
