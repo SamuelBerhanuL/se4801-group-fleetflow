@@ -5,6 +5,8 @@ on:
     branches:
       - main
       - develop
+      - feature/shipment-audit
+
   pull_request:
     branches:
       - main
